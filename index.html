@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <p id="result"></p>
+    </div>
+    <textarea name="" id="text" cols="30" rows="10"></textarea>
+    <script>
+        const $text = document.getElementById("text")
+        const $result = document.getElementById("result")
+
+        var markdowns = []
+        $text.addEventListener("input", () => {
+            $result.innerHTML = $text.value
+            verificarMarkdowns()
+
+        })
+        function verificarMarkdowns() {
+            let texto = $text.value
+            console.log($result.innerHTML)
+            for (let i = 0; i < $result.innerHTML.length; i++) {
+                if (texto[i] == '#' || texto[i] == '/' || texto[i] == '*' || texto[i] == ';') {
+                    for (let j = i + 1; j < $result.innerHTML.length; j++) {
+                        if (texto[i] == texto[j]) {
+                            let parteAnterior = $result.innerHTML.slice(0, i)
+                            let parteFim = $result.innerHTML.slice(j+1, $result.innerHTML.length)
+                            console.log(parteAnterior, parteFim)
+                            if (texto[j] == "#") {
+                                var parteModificada = "<b>" + $result.innerHTML.slice(i + 1, j) + "</b>"
+                                var alteracao = parteAnterior + parteModificada + parteFim
+                                $result.innerHTML = alteracao
+                                i = j
+                            }
+                        }
+                    }
+                } 
+            }
+        }
+    </script>
+</body>
+
+</html>
